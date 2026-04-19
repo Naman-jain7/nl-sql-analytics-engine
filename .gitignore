@@ -1,0 +1,8 @@
+.env
+IDEA.md
+
+.venv/
+__pycache__/
+.ruff_cache/
+.pytest_
+models/
