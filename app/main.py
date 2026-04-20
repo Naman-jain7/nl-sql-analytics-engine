@@ -21,6 +21,12 @@ def init_session_state():
     if "db_connected" not in st.session_state:
         st.session_state.db_connected = False
 
+    if "db_engine" not in st.session_state:
+        st.session_state.db_engine = "SQLite"
+    
+    if "db_config" not in st.session_state:
+        st.session_state.db_config = {"path": "data/querysight.db"}
+
 
 def apply_custom_css():
     """Apply premium styling with vanilla CSS."""

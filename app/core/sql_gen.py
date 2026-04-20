@@ -100,10 +100,16 @@ class SQLGenerator:
             schema_parts.append(f"Table {table} ({', '.join(col_strings)})")
         
         schema_context = "\n".join(schema_parts)
+        logger.info(f"SQLGen: Generating SQL for question: {question}")
         prompt = self.format_prompt(question, schema_context)
         
+        # Ensure tokenizer has a pad token
+        if self.tokenizer.pad_token is None:
+            self.tokenizer.pad_token = self.tokenizer.eos_token
+            
         inputs = self.tokenizer(prompt, return_tensors="pt").to(DEVICE)
         
+        logger.info("SQLGen: Model generating...")
         with torch.no_grad():
             outputs = self.model.generate(
                 **inputs,
@@ -114,6 +120,7 @@ class SQLGenerator:
                 pad_token_id=self.tokenizer.pad_token_id,
                 eos_token_id=self.tokenizer.eos_token_id
             )
+        logger.info("SQLGen: Generation complete.")
         
         generated_text = self.tokenizer.decode(outputs[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
         # Clean up any potential markdown formatting in output
