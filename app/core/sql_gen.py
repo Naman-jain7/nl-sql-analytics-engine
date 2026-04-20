@@ -3,10 +3,12 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 from peft import PeftModel
 from loguru import logger
 import os
+from dotenv import load_dotenv
 
-# Configuration
+load_dotenv()
+
 # Base model matching the Qwen2.5-3B architecture
-BASE_MODEL_NAME = "Qwen/Qwen2.5-3B" 
+BASE_MODEL_NAME = os.getenv('MODEL_ID')
 ADAPTER_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "models"))
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 

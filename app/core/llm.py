@@ -13,7 +13,6 @@ class OllamaGenerator:
     """
     def __init__(self, model_name: str = LLM_MODEL_NAME):
         self.model_name = model_name
-        # Use explicit host to avoid proxy/environment issues on Windows
         self.client = Client(host='http://127.0.0.1:11434')
 
     def generate(self, question: str, schema_info: dict) -> Tuple[str, str]:
@@ -69,7 +68,7 @@ class OllamaGenerator:
             logger.error(f"Ollama Error: {e}")
             return f"-- Connection Error: {e}", "Could not connect to Ollama server."
 
-def generate_with_ollama(question: str, schema_info: dict, model_name: str = "gemma3:1b"):
+def generate_with_ollama(question: str, schema_info: dict, model_name: str = LLM_MODEL_NAME):
     """Wrapper for Ollama generation."""
     gen = OllamaGenerator(model_name)
     return gen.generate(question, schema_info)

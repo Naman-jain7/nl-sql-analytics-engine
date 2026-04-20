@@ -1,4 +1,12 @@
 import streamlit as st
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+DATA_DIR=os.getenv('DATA_DIR')
+MYSQL_HOST=os.getenv('MYSQL_HOST')
+MYSQL_USER=os.getenv('MYSQL_USER')
+MYSQL_PORT=os.getenv('MYSQL_PORT')
 
 def render_sidebar():
     """Render the QuerySight sidebar UI."""
@@ -13,7 +21,7 @@ def render_sidebar():
         st.session_state.db_engine = db_type
         
         if db_type == "SQLite":
-            db_path = st.text_input("Database Path", value="data/querysight.db")
+            db_path = st.text_input("Database Path", value=DATA_DIR)
             st.session_state.db_config = {"path": db_path}
             if st.button("Connect", use_container_width=True):
                 st.session_state.db_connected = True
@@ -22,10 +30,10 @@ def render_sidebar():
         elif db_type == "MySQL":
             col1, col2 = st.columns(2)
             with col1:
-                host = st.text_input("Host", value="localhost")
-                user = st.text_input("User", value="root")
+                host = st.text_input("Host", value=MYSQL_HOST)
+                user = st.text_input("User", value=MYSQL_USER)
             with col2:
-                port = st.text_input("Port", value="3306")
+                port = st.text_input("Port", value=MYSQL_PORT)
                 db_name = st.text_input("Database")
             
             password = st.text_input("Password", type="password")
