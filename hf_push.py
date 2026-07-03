@@ -11,12 +11,12 @@ ADAPTER_PATH = os.getenv("ADAPTER_PATH")
 HF_TOKEN = os.getenv("HF_TOKEN")
 
 
-base_model = AutoModelForCausalLM.from_pretrained(MODEL_ID)
+base_model = AutoModelForCausalLM.from_pretrained(MODEL_ID) # type: ignore
 tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
 
-model = PeftModel.from_pretrained(base_model, ADAPTER_PATH)
+model = PeftModel.from_pretrained(base_model, ADAPTER_PATH) # type: ignore
 
-merged_model = model.merge_and_unload()
+merged_model = model.merge_and_unload() # type: ignore
 
 
 merged_model.push_to_hub(f'{HF_USERNAME}/qwen2.5-3b-sql', token=HF_TOKEN)

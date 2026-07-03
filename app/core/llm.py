@@ -11,7 +11,7 @@ class OllamaGenerator:
     """
     Handles interactions with models running on Ollama.
     """
-    def __init__(self, model_name: str = LLM_MODEL_NAME):
+    def __init__(self, model_name: str = LLM_MODEL_NAME): # type: ignore
         self.model_name = model_name
         self.client = Client(host='http://127.0.0.1:11434')
 
@@ -68,7 +68,7 @@ class OllamaGenerator:
             logger.error(f"Ollama Error: {e}")
             return f"-- Connection Error: {e}", "Could not connect to Ollama server."
 
-def generate_with_ollama(question: str, schema_info: dict, model_name: str = LLM_MODEL_NAME):
+def generate_with_ollama(question: str, schema_info: dict, model_name: str = LLM_MODEL_NAME): # type: ignore
     """Wrapper for Ollama generation."""
     gen = OllamaGenerator(model_name)
     return gen.generate(question, schema_info)
