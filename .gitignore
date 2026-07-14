@@ -6,3 +6,4 @@ IDEA.md
 __pycache__/
 .ruff_cache/
 models/
+personal/
