@@ -15,3 +15,5 @@ tqdm==4.67.3
 loguru==0.7.3
 
 torchvision==0.26.0
+sentencepiece==0.2.2
+tiktoken==0.13.0

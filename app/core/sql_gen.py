@@ -47,7 +47,6 @@ class SQLGenerator:
             base_model = AutoModelForCausalLM.from_pretrained(
                 BASE_MODEL_NAME,
                 torch_dtype=torch.float16 if DEVICE == "cuda" else torch.float32,
-                device_map="auto" if DEVICE == "cuda" else None,
                 trust_remote_code=True
             )
             
@@ -55,8 +54,7 @@ class SQLGenerator:
             logger.info(f"SQLGen: Applying LoRA adapters from {ADAPTER_PATH}...")
             self.model = PeftModel.from_pretrained(base_model, ADAPTER_PATH)
             
-            if DEVICE == "cpu":
-                self.model.to(DEVICE)
+            self.model.to(DEVICE)
                 
             self.model.eval()
             self._initialized = True

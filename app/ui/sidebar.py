@@ -7,6 +7,7 @@ DATA_DIR=os.getenv('DATA_DIR')
 MYSQL_HOST=os.getenv('MYSQL_HOST')
 MYSQL_USER=os.getenv('MYSQL_USER')
 MYSQL_PORT=os.getenv('MYSQL_PORT')
+LLM_MODEL_NAME = os.getenv('LLM_MODEL_NAME')
 
 def render_sidebar():
     """Render the QuerySight sidebar UI."""
@@ -57,7 +58,7 @@ def render_sidebar():
         st.markdown("#### 🧠 Model Engine")
         model_choice = st.selectbox(
             "Select Generator", 
-            ["Qwen 2.5 (Local LoRA)", "Ministral-3:3B"],
+            ["Qwen 2.5 (Local LoRA)", LLM_MODEL_NAME],
             index=0
         )
         st.session_state.selected_model = model_choice
