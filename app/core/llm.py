@@ -1,8 +1,8 @@
-from ollama import Client
-from loguru import logger
-from typing import Tuple
 import os
+
 from dotenv import load_dotenv
+from loguru import logger
+from ollama import Client
 
 load_dotenv()
 
@@ -15,7 +15,7 @@ class OllamaGenerator:
         self.model_name = model_name
         self.client = Client(host='http://127.0.0.1:11434')
 
-    def generate(self, question: str, schema_info: dict) -> Tuple[str, str]:
+    def generate(self, question: str, schema_info: dict) -> tuple[str, str]:
         """
         Generates SQL and an explanation using Ollama.
         """
@@ -64,7 +64,7 @@ class OllamaGenerator:
             sql = sql.replace("```sql", "").replace("```", "").strip()
             return sql, explanation
 
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"Ollama Error: {e}")
             return f"-- Connection Error: {e}", "Could not connect to Ollama server."
 

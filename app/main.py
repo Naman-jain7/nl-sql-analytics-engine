@@ -5,9 +5,10 @@ ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if ROOT_DIR not in sys.path:
     sys.path.append(ROOT_DIR)
 
-import streamlit as st  # noqa: E402
-from app.ui.sidebar import render_sidebar  # noqa: E402
-from app.ui.chat import render_chat  # noqa: E402
+import streamlit as st
+
+from app.ui.chat import render_chat
+from app.ui.sidebar import render_sidebar
 
 
 def init_session_state():

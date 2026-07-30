@@ -1,11 +1,13 @@
-import streamlit as st
-import pandas as pd
-from app.core.sql_gen import generate_sql
-from app.db.sqlite_db import execute_query, create_table
-from app.core.llm import generate_with_ollama
-from app.schemas.table import TableSchema, ColumnSchema
 import os
+
+import pandas as pd
+import streamlit as st
 from dotenv import load_dotenv
+
+from app.core.llm import generate_with_ollama
+from app.core.sql_gen import generate_sql
+from app.db.sqlite_db import create_table, execute_query
+from app.schemas.table import ColumnSchema, TableSchema
 
 load_dotenv()
 

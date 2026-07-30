@@ -1,9 +1,11 @@
-import sqlite3
-import pandas as pd
 import os
+import sqlite3
+from typing import Any
+
+import pandas as pd
 from loguru import logger
+
 from app.schemas.table import TableSchema
-from typing import List, Dict, Any, Tuple, Optional
 
 # Constants
 DB_DIR = "data"
@@ -60,7 +62,7 @@ def create_table(schema: TableSchema) -> bool:
     finally:
         conn.close()
 
-def execute_query(query: str, params: tuple = ()) -> Tuple[Optional[pd.DataFrame], Optional[str]]:
+def execute_query(query: str, params: tuple = ()) -> tuple[pd.DataFrame | None, str | None]:
     """
     Executes a SQL query and returns the result as a Pandas DataFrame.
     Supports both SELECT (reading) and DML/DDL (writing/modifying) queries.
@@ -86,17 +88,17 @@ def execute_query(query: str, params: tuple = ()) -> Tuple[Optional[pd.DataFrame
             conn.commit()
             return pd.DataFrame({"Status": ["Command executed successfully"]}), None
             
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         logger.error(f"Database: Query execution failed: {e}")
         return None, str(e)
     finally:
         conn.close()
 
-def list_tables() -> List[str]:
+def list_tables() -> list[str]:
     """Returns a list of all user-defined table names in the database."""
     query = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%';"
     conn = get_db_connection()
-    if not conn: 
+    if not conn:
         return []
     try:
         cursor = conn.execute(query)
@@ -107,7 +109,7 @@ def list_tables() -> List[str]:
     finally:
         conn.close()
 
-def get_table_schema_info(table_name: str) -> List[Dict[str, Any]]:
+def get_table_schema_info(table_name: str) -> list[dict[str, Any]]:
     """Retrieves metadata (columns, types, etc.) for a specific table."""
     query = f"PRAGMA table_info(\"{table_name}\");"
     conn = get_db_connection()

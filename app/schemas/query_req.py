@@ -1,6 +1,7 @@
-from typing import Optional
-from pydantic import BaseModel
 from datetime import datetime
+
+from pydantic import BaseModel
+
 
 class QueryRequest(BaseModel):
     dataset_id: int
@@ -9,7 +10,7 @@ class QueryRequest(BaseModel):
 class SQLQuery(BaseModel):
     query: str
     is_valid: bool
-    error: Optional[str] = None
+    error: str | None = None
 
 class QueryLog(BaseModel):
     id: int
@@ -17,5 +18,5 @@ class QueryLog(BaseModel):
     question: str
     generated_sql: str
     execution_status: str        # success / failed
-    error: Optional[str] = None
+    error: str | None = None
     created_at: datetime

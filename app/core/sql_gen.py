@@ -1,9 +1,10 @@
-import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from peft import PeftModel
-from loguru import logger
 import os
+
+import torch
 from dotenv import load_dotenv
+from loguru import logger
+from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 load_dotenv()
 
@@ -60,7 +61,7 @@ class SQLGenerator:
             self._initialized = True
             logger.success("SQLGen: Model and LoRA adapters loaded successfully.")
             
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"SQLGen: Failed to load model/adapters: {e}")
             # We don't raise here to allow the app to boot even if model loading fails
             # but we set a flag
